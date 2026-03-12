@@ -16,7 +16,7 @@ def _get_connection():
         return oracledb.connect(f"{user}/{password}@{connection_string}")
     except Exception as e:
         print(e, file=sys.stderr)
-
+        
 @mcp.tool()
 def executar_query(query: str, maxRows: int = 1000) -> str:
     """
