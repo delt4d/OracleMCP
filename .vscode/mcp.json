@@ -1,0 +1,15 @@
+{
+    "servers": {
+        "sankhya": {
+            "type": "stdio",
+            "command": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "args": [
+                "${workspaceFolder}/mcp_server.py"
+            ],
+            "env": {
+                "BEARER_TOKEN": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImtpZCI6ImZLR0cifQ.eyJpZCI6IkdVRVNUX2VmclJJSU9GTVhkdkw3bSIsIm5ldHdvcmtJZCI6Im9tNFNzTGRDU2YiLCJuZXR3b3JrRG9tYWluIjoiY29tbXVuaXR5LnNhbmtoeWEuY29tLmJyIiwidG9rZW5UeXBlIjoiR1VFU1QiLCJlbnRpdHlJZCI6bnVsbCwicGVybWlzc2lvbkNvbnRleHQiOm51bGwsInBlcm1pc3Npb25zIjpudWxsLCJpYXQiOjE3NzI5OTk2NDQsImV4cCI6MTc3MzAxNDA0NH0.t1zvakeJZenkA8P1Cio33RtcibNuJgN8MxrM9__9BcNuwH3UebqjsaDUDy8G77JSvt9azzo3tYxAmSVr4Q1iJw"
+            }
+        }
+    },
+    "inputs": []
+}
