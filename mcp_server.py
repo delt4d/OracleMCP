@@ -1,30 +1,29 @@
 import json
 import os
+import sys
 import oracledb
 
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("OracleQueryServer")
 
-
 def _get_connection():
     """Cria e retorna uma conexão com o banco Oracle."""
-    connection_string = os.getenv("ORACLE_CONNECTION_STRING")
-    user = os.getenv("ORACLE_USER")
-    password = os.getenv("ORACLE_PASSWORD")
-    return oracledb.connect(f"{user}/{password}@{connection_string}")
-
-
+    try:
+        connection_string = os.getenv("ORACLE_CONNECTION_STRING")
+        user = os.getenv("ORACLE_USER")
+        password = os.getenv("ORACLE_PASSWORD")
+        return oracledb.connect(f"{user}/{password}@{connection_string}")
+    except Exception as e:
+        print(e, file=sys.stderr)
 
 @mcp.tool()
 def executar_query(query: str, maxRows: int = 1000) -> str:
     """
     Executa uma query SQL no Oracle e retorna os resultados em JSON.
-
     Args:
         query: Comando SQL a ser executado
         maxRows: Número máximo de linhas a retornar (padrão: 1000)
-
     Returns:
         JSON string com os resultados da query
     """
@@ -45,20 +44,24 @@ def executar_query(query: str, maxRows: int = 1000) -> str:
             results.append(row_dict)
         cursor.close()
         connection.close()
-
-        return json.dumps({
+        
+        result = json.dumps({
             "success": True,
             "columns": columns,
             "rows": results,
             "row_count": len(results)
         }, ensure_ascii=False, indent=2)
+        print(result, file=sys.stderr)
+        return result
 
     except Exception as e:
-        return json.dumps({
+        result = json.dumps({
             "success": False,
             "error": str(e)
         }, ensure_ascii=False, indent=2)
-
+        print(result, file=sys.stderr)
+        return result
 
 if __name__ == "__main__":
+    print("Iniciando MCP", file=sys.stderr)
     mcp.run()
